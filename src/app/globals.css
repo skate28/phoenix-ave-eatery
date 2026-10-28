@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/*
+  Famous Sandwiches diner palette. Live values come from `site.palette` when set (see layout.tsx).
+  Ketchup red, mustard, diner-booth teal, cream counter-top and coffee-black ink.
+*/
+:root {
+  --fs-ink: #23150e;
+  --fs-brand: #d22d1e;
+  --fs-brand-deep: #9a1c11;
+  --fs-teal: #1f7a75;
+  --fs-mustard: #f4b31c;
+  --fs-cream: #f8ecd4;
+  --fs-paper: #fffaf0;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-ink: var(--fs-ink);
+  --color-brand: var(--fs-brand);
+  --color-brand-deep: var(--fs-brand-deep);
+  --color-teal: var(--fs-teal);
+  --color-mustard: var(--fs-mustard);
+  --color-cream: var(--fs-cream);
+  --color-paper: var(--fs-paper);
+  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), "Arial Black", Impact, sans-serif;
+  --font-script: var(--font-script-face), "Brush Script MT", cursive;
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-spin-slow: spin 30s linear infinite;
+  --animate-sunburst: spin 120s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  background: var(--fs-cream);
+}
+
+body {
+  background-color: var(--fs-cream);
+  color: var(--fs-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--fs-mustard);
+  color: var(--fs-ink);
+}
+
+/* Black-and-white diner floor tiles. */
+.checker {
+  background-color: var(--fs-paper);
+  background-image:
+    conic-gradient(var(--fs-ink) 25%, transparent 0 50%, var(--fs-ink) 0 75%, transparent 0);
+  background-size: var(--checker-size, 22px) var(--checker-size, 22px);
+}
+
+/* Retro sunburst rays behind the hero sign. */
+.sunburst {
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in oklab, var(--fs-mustard) 55%, transparent) 0deg 7.5deg,
+    transparent 7.5deg 15deg
+  );
+  mask-image: radial-gradient(circle at center, #000 18%, transparent 68%);
+}
+
+/* Counter-top grain for cream sections. */
+.counter-grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.counter-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.28 0 0 0 0 0.12 0 0 0 .15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Diner booth piping: thin cream pinstripes on teal. */
+.pinstripe {
+  background-image: repeating-linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--fs-cream) 14%, transparent) 0 2px,
+    transparent 2px 26px
+  );
+}
+
+/* Small polka dots for cards. */
+.dots {
+  background-image: radial-gradient(color-mix(in oklab, var(--fs-ink) 14%, transparent) 1.3px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+/* Scalloped bottom edge, like a paper guest check. */
+.scallop-bottom {
+  --scallop: 14px;
+  mask:
+    radial-gradient(var(--scallop) at 50% 100%, #0000 98%, #000) 50% / calc(var(--scallop) * 2) 100% repeat-x;
+}
+
+/* Chunky 3D sign lettering. */
+.sign-extrude {
+  text-shadow:
+    1px 1px 0 var(--fs-ink),
+    2px 2px 0 var(--fs-ink),
+    3px 3px 0 var(--fs-ink),
+    4px 4px 0 var(--fs-ink),
+    5px 5px 0 var(--fs-ink),
+    6px 6px 0 var(--fs-ink),
+    7px 7px 0 var(--fs-ink);
+}
+
+.sign-extrude-sm {
+  text-shadow:
+    1px 1px 0 var(--fs-ink),
+    2px 2px 0 var(--fs-ink),
+    3px 3px 0 var(--fs-ink),
+    4px 4px 0 var(--fs-ink);
+}
+
+.text-stroke {
+  -webkit-text-stroke: 2px var(--fs-ink);
+  paint-order: stroke fill;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .animate-spin-slow,
+  .animate-sunburst {
+    animation: none;
+  }
+}
